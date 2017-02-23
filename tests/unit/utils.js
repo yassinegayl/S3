@@ -100,7 +100,8 @@ describe('utils.getAllEndpoints', () => {
         assert(allEndpoints.indexOf('s3.us-west-1.amazonaws.com') >= 0);
         assert(allEndpoints.indexOf('s3-us-west-2.amazonaws.com') >= 0);
         assert(allEndpoints.indexOf('s3-us-gov-west-1.amazonaws.com') >= 0);
-        assert(allEndpoints.indexOf('s3-fips-us-gov-west-1.amazonaws.com') >= 0);
+        assert(allEndpoints.indexOf(
+            's3-fips-us-gov-west-1.amazonaws.com') >= 0);
         assert(allEndpoints.indexOf('localhost') >= 0);
         assert(allEndpoints.indexOf('s3.scality.test') >= 0);
         assert(allEndpoints.indexOf('s3.docker.test') >= 0);
