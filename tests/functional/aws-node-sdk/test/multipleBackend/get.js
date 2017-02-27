@@ -30,7 +30,8 @@ describe('Multiple backend get object', () => {
                 return bucketUtil.deleteOne(bucket);
             })
             .catch(err => {
-                process.stdout.write(`Error in afterEach: ${err}\n`);
+                process.stdout.write('Error emptying/deleting bucket: ' +
+                `${err}\n`);
                 throw err;
             });
         });
@@ -41,7 +42,7 @@ describe('Multiple backend get object', () => {
                     assert.notEqual(err, null,
                         'Expected failure but got success');
                     assert.strictEqual(err.code, 'MethodNotAllowed');
-                    return done();
+                    done();
                 });
             });
         it('should return NoSuchKey error when no such object',
@@ -50,7 +51,7 @@ describe('Multiple backend get object', () => {
                     assert.notEqual(err, null,
                         'Expected failure but got success');
                     assert.strictEqual(err.code, 'NoSuchKey');
-                    return done();
+                    done();
                 });
             });
 
@@ -58,12 +59,23 @@ describe('Multiple backend get object', () => {
             '(mem/file/AWS)', () => {
             before(() => {
                 process.stdout.write('Putting object to mem');
-                s3.putObject({ Bucket: bucket, Key: memObject,
-                    Metadata: { 'scal-location-constraint': 'mem' } });
-                s3.putObject({ Bucket: bucket, Key: fileObject,
-                    Metadata: { 'scal-location-constraint': 'file' } });
-                s3.putObject({ Bucket: bucket, Key: awsObject,
-                    Metdata: { 'scal-location-constraint': 'test-region' } });
+                return s3.putObjectAsync({ Bucket: bucket, Key: memObject,
+                    Metadata: { 'scal-location-constraint': 'mem' } })
+                .then(() => {
+                    process.stdout.write('Putting object to file');
+                    return s3.putObjectAsync({ Bucket: bucket, Key: fileObject,
+                        Metadata: { 'scal-location-constraint': 'file' } });
+                })
+                .then(() => {
+                    process.stdout.write('Putting object to AWS');
+                    return s3.putObjectAsync({ Bucket: bucket, Key: awsObject,
+                        Metadata: { 'scal-location-constraint': 'test-region' },
+                    });
+                })
+                .catch(err => {
+                    process.stdout.write(`Error putting objects: ${err}\n`);
+                    throw err;
+                });
             });
             it('should get an object from mem', done => {
                 s3.getObject({ Bucket: bucket, Key: memObject }, err => {

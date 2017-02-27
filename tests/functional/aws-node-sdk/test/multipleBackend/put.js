@@ -3,6 +3,7 @@ import withV4 from '../support/withV4';
 import BucketUtility from '../../lib/utility/bucket-util';
 
 const bucket = 'buckettestmultiplebackendput';
+const key = 'somekey';
 
 describe('MultipleBackend put object', () => {
     withV4(sigCfg => {
@@ -33,8 +34,41 @@ describe('MultipleBackend put object', () => {
             });
         });
 
+        it('should return an error to put request without a valid bucket name',
+            done => {
+                s3.putObject({ Bucket: '', Key: key }, err => {
+                    assert.notEqual(err, null,
+                        'Expected failure but got success');
+                    assert.strictEqual(err.code, 'MethodNotAllowed');
+                    done();
+                });
+            });
+
+        it('should return an error to put request without a valid key name',
+            done => {
+                s3.putObject({ Bucket: bucket, Key: '' }, err => {
+                    assert.notEqual(err, null,
+                        'Expected failure but got success');
+                    assert.strictEqual(err.code, 'BucketAlreadyOwnedByYou');
+                    done();
+                });
+            });
+
+        it('should return an error to put request without a valid ' +
+            'location constraint', done => {
+            const params = { Bucket: bucket, Key: key,
+                Body: 'somestring',
+                Metadata: { 'scal-location-constraint': 'fail-region' } };
+            s3.putObject(params, err => {
+                assert.notEqual(err, null, 'Expected failure but got success');
+                assert.strictEqual(err.code, 'InvalidArgument');
+                done();
+            });
+        });
+
         it('should put an object to mem', done => {
-            const params = { Bucket: bucket, Key: 'key',
+            const params = { Bucket: bucket, Key: key,
+                Body: 'somestring',
                 Metadata: { 'scal-location-constraint': 'mem' },
             };
             s3.putObject(params, err => {
@@ -43,8 +77,10 @@ describe('MultipleBackend put object', () => {
                 done();
             });
         });
+
         it('should put an object to file', done => {
-            const params = { Bucket: bucket, Key: 'key',
+            const params = { Bucket: bucket, Key: key,
+                Body: 'somestring',
                 Metadata: { 'scal-location-constraint': 'file' },
             };
             s3.putObject(params, err => {
@@ -53,9 +89,11 @@ describe('MultipleBackend put object', () => {
                 done();
             });
         });
+
         it('should put an object to real AWS', done => {
-            const params = { Bucket: bucket, Key: 'key',
-                Metadata: { 'scal-location-constraint': 'aws-us-east-test' },
+            const params = { Bucket: bucket, Key: key,
+                Body: 'somestring',
+                Metadata: { 'scal-location-constraint': 'test-region' },
             };
             s3.putObject(params, err => {
                 assert.equal(err, null, 'Expected success, ' +
