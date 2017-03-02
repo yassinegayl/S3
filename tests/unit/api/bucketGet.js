@@ -22,7 +22,6 @@ const postBody = Buffer.from('I am a body', 'utf8');
 const prefix = 'sub';
 const locationConstraint = config.locationConstraints ? 'aws-us-east-1' :
 'us-east-1';
-
 let testPutBucketRequest;
 let testPutObjectRequest1;
 let testPutObjectRequest2;
@@ -79,14 +78,19 @@ describe('bucketGet API', () => {
             next =>
                 bucketPut(authInfo, testPutBucketRequest,
                 locationConstraint, log, next),
-            (corsHeaders, next) =>
+            (corsHeaders, next) => {
                 objectPut(authInfo, testPutObjectRequest1, undefined,
-                log, next),
-            (result, corsHeaders, next) => objectPut(authInfo,
-                testPutObjectRequest2, undefined, log, next),
+                log, next);
+            },
+            (result, corsHeaders, next) => {
+                objectPut(authInfo,
+                testPutObjectRequest2, undefined, log, next);
+            },
             (result, corsHeaders, next) =>
                 bucketGet(authInfo, testGetRequest, log, next),
-            (result, corsHeaders, next) => parseString(result, next),
+            (result, corsHeaders, next) => {
+                parseString(result, next);
+            },
         ],
         (err, result) => {
             assert.strictEqual(result.ListBucketResult

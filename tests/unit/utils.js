@@ -87,11 +87,23 @@ describe('utils.getAllEndpoints', () => {
     itSkipIfNewConfig('should return endpoints from legacy config', () => {
         const allEndpoints = utils.getAllEndpoints();
 
-        assert(allEndpoints.indexOf('s3-us-west-2.amazonaws.com') >= 0);
+        assert(allEndpoints.indexOf('s3.ap-northeast-1.amazonaws.com') >= 0);
+        assert(allEndpoints.indexOf('s3.ap-southeast-1.amazonaws.com') >= 0);
+        assert(allEndpoints.indexOf('s3.ap-southeast-2.amazonaws.com') >= 0);
+        assert(allEndpoints.indexOf('s3.eu-central-1.amazonaws.com') >= 0);
+        assert(allEndpoints.indexOf('s3.eu.central-1.amazonaws.com') >= 0);
+        assert(allEndpoints.indexOf('s3.eu-west-1.amazonaws.com') >= 0);
+        assert(allEndpoints.indexOf('s3.sa-east-1.amazonaws.com') >= 0);
         assert(allEndpoints.indexOf('s3.amazonaws.com') >= 0);
         assert(allEndpoints.indexOf('s3-external-1.amazonaws.com') >= 0);
         assert(allEndpoints.indexOf('s3.us-east-1.amazonaws.com') >= 0);
+        assert(allEndpoints.indexOf('s3.us-west-1.amazonaws.com') >= 0);
+        assert(allEndpoints.indexOf('s3-us-west-2.amazonaws.com') >= 0);
+        assert(allEndpoints.indexOf('s3-us-gov-west-1.amazonaws.com') >= 0);
+        assert(allEndpoints.indexOf('s3-fips-us-gov-west-1.amazonaws.com') >= 0);
         assert(allEndpoints.indexOf('localhost') >= 0);
+        assert(allEndpoints.indexOf('s3.scality.test') >= 0);
+        assert(allEndpoints.indexOf('s3.docker.test') >= 0);
     });
 });
 

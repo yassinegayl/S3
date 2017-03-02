@@ -62,7 +62,8 @@ function printUUID(metadataPath) {
     logger.info(`This deployment's identifier is ${uuidValue}`);
 }
 
-if (config.backends.data !== 'file' && config.backends.metadata !== 'file') {
+if (config.backends.data !== 'file' && config.backends.data !== 'multiple'
+    || config.backends.metadata === 'scality') {
     logger.info('No init required. Go forth and store data.');
     process.exit(0);
 }

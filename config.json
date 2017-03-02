@@ -11,6 +11,15 @@
                 "credentialsProfile": "default"
             }
         },
+        "test-region": {
+            "type": "aws_s3",
+            "legacyAwsBehavior": true,
+            "details": {
+                "awsEndpoint": "s3.amazonaws.com",
+                "bucketName": "putobjecttester444",
+                "credentialsProfile": "default"
+            }
+        },
         "scality-us-east-1": {
             "type": "scality",
             "legacyAwsBehavior": true,

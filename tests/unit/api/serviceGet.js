@@ -18,7 +18,6 @@ const bucketName3 = 'bucketname3';
 const locationConstraint = config.locationConstraints ? 'aws-us-east-1' :
 'us-east-1';
 
-
 describe('serviceGet API', () => {
     beforeEach(() => {
         cleanup();

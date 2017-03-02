@@ -66,7 +66,6 @@ const usersBucket = new BucketInfo(usersBucketName,
 const locationConstraint = config.locationConstraints ? 'aws-us-east-1' :
     'us-east-1';
 
-
 describe('transient bucket handling', () => {
     beforeEach(done => {
         cleanup();

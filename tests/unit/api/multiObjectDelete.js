@@ -87,7 +87,7 @@ describe('getObjMetadataAndDelete function for multiObjectDelete', () => {
                     // eslint-disable-next-line
                     assert.deepStrictEqual(ds, [ , , ]);
                     done();
-                }, 20);
+                }, 500);
             });
     });
 
