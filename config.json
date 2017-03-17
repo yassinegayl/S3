@@ -40,5 +40,9 @@
     "metadataDaemon": {
         "host": "localhost",
         "port": 9990
+    },
+    "dataDaemon": {
+        "host": "localhost",
+        "port": 9991
     }
 }
