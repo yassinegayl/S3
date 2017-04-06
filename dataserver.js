@@ -3,6 +3,7 @@ require('babel-core/register');
 
 const arsenal = require('arsenal');
 const config = require('./lib/Config.js').default;
+const logger = require('./lib/utilities/logger').logger;
 
 if (config.backends.data === 'file') {
     const restServer = new arsenal.network.rest.Server(
@@ -11,7 +12,12 @@ if (config.backends.data === 'file') {
               { dataPath: config.dataDaemon.dataPath,
                 log: config.log }),
           log: config.log });
-    restServer.setup(() => {
+    restServer.setup(err => {
+        if (err) {
+            logger.error('Error initializing REST data server',
+                         { error: err });
+            return ;
+        }
         restServer.start();
     });
 }
