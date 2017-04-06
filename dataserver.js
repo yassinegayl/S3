@@ -6,7 +6,7 @@ const config = require('./lib/Config.js').default;
 const logger = require('./lib/utilities/logger').logger;
 
 if (config.backends.data === 'file') {
-    const restServer = new arsenal.network.rest.Server(
+    const restServer = new arsenal.network.rest.RESTServer(
         { port: config.dataDaemon.port,
           dataStore: new arsenal.storage.data.file.Store(
               { dataPath: config.dataDaemon.dataPath,
