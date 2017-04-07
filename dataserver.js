@@ -8,7 +8,7 @@ const logger = require('./lib/utilities/logger').logger;
 if (config.backends.data === 'file') {
     const restServer = new arsenal.network.rest.RESTServer(
         { port: config.dataDaemon.port,
-          dataStore: new arsenal.storage.data.file.Store(
+          dataStore: new arsenal.storage.data.file.DataFileStore(
               { dataPath: config.dataDaemon.dataPath,
                 log: config.log }),
           log: config.log });
