@@ -22,7 +22,7 @@ if (config.backends.data === 'file') {
         if (err) {
             logger.error('Error initializing REST data server',
                          { error: err });
-            return ;
+            return;
         }
         restServer.start();
     });
