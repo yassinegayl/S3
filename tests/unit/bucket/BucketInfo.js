@@ -71,6 +71,21 @@ const testCorsConfiguration = [
         allowedHeaders: ['*'],
         maxAgeSeconds: 3000 },
 ];
+
+const testReplicationConfiguration = {
+    Role: 'STRING_VALUE',
+    Rules: [
+        {
+            Destination: {
+                Bucket: 'STRING_VALUE',
+                StorageClass: 'STANDARD',
+            },
+            Prefix: 'STRING_VALUE',
+            Status: 'Enabled',
+            ID: 'STRING_VALUE',
+        },
+    ],
+};
 // create a dummy bucket to test getters and setters
 
 Object.keys(acl).forEach(
@@ -86,7 +101,8 @@ Object.keys(acl).forEach(
             }, testVersioningConfiguration,
             testLocationConstraint,
             testWebsiteConfiguration,
-            testCorsConfiguration);
+            testCorsConfiguration,
+            testReplicationConfiguration);
 
         describe('serialize/deSerialize on BucketInfo class', () => {
             const serialized = dummyBucket.serialize();
@@ -108,6 +124,8 @@ Object.keys(acl).forEach(
                     websiteConfiguration: dummyBucket._websiteConfiguration
                         .getConfig(),
                     cors: dummyBucket._cors,
+                    replicationConfiguration:
+                        dummyBucket._replicationConfiguration,
                 };
                 assert.strictEqual(serialized, JSON.stringify(bucketInfos));
                 done();
@@ -285,6 +303,13 @@ Object.keys(acl).forEach(
                 dummyBucket.setCors(newCorsConfiguration);
                 assert.deepStrictEqual(dummyBucket.getCors(),
                     newCorsConfiguration);
+            });
+            it('setReplicationConfiguration should set replication ' +
+                'configuration', () => {
+                const newReplicationConfiguration =
+                    { Status: 'Enabled', MfaDelete: 'Enabled' };
+                dummyBucket
+                    .setReplicationConfiguration(newReplicationConfiguration);
             });
         });
     })
