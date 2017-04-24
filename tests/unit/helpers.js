@@ -328,6 +328,48 @@ export class CorsConfigTester {
     }
 }
 
+export class TaggingConfigTester {
+    constructor() {
+        this._tags = [
+          { key: 'coco', value: 'toto' },
+          { key: 'coco2', value: 'toto2' },
+        ];
+    }
+
+    getTags() {
+        return this._tags;
+    }
+
+    constructXml() {
+        const xml = [];
+        xml.push('<Tagging> <TagSet> ');
+        this._tags.forEach(tag => {
+            const key = tag.key;
+            const value = tag.value;
+            xml.push(`<Tag> <Key>${key}</Key> <Value>${value}</Value> </Tag>`);
+        });
+        xml.push('</TagSet> </Tagging> ');
+        return xml.join('');
+    }
+
+    createBucketTaggingRequest(method, bucketName, body) {
+        const request = {
+            bucketName,
+            headers: {
+                host: `${bucketName}.s3.amazonaws.com`,
+            },
+            url: '/?tagging',
+            query: { tagging: '' },
+        };
+        if (method === 'PUT') {
+            request.post = body || this.constructXml();
+            request.headers['content-md5'] = crypto.createHash('md5')
+                .update(request.post, 'utf8').digest('base64');
+        }
+        return request;
+    }
+}
+
 export class AccessControlPolicy {
     constructor(params) {
         this.Owner = {};

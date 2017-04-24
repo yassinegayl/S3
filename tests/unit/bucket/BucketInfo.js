@@ -71,6 +71,8 @@ const testCorsConfiguration = [
         allowedHeaders: ['*'],
         maxAgeSeconds: 3000 },
 ];
+
+const testTagConfiguration = [{ key: 'foo', value: 'val' }];
 // create a dummy bucket to test getters and setters
 
 Object.keys(acl).forEach(
@@ -86,7 +88,8 @@ Object.keys(acl).forEach(
             }, testVersioningConfiguration,
             testLocationConstraint,
             testWebsiteConfiguration,
-            testCorsConfiguration);
+            testCorsConfiguration,
+            testTagConfiguration);
 
         describe('serialize/deSerialize on BucketInfo class', () => {
             const serialized = dummyBucket.serialize();
@@ -108,6 +111,7 @@ Object.keys(acl).forEach(
                     websiteConfiguration: dummyBucket._websiteConfiguration
                         .getConfig(),
                     cors: dummyBucket._cors,
+                    tags: dummyBucket._tags,
                 };
                 assert.strictEqual(serialized, JSON.stringify(bucketInfos));
                 done();
@@ -166,6 +170,12 @@ Object.keys(acl).forEach(
                 assert(Array.isArray(cors[0].exposeHeaders));
                 assert.strictEqual(typeof cors[0].maxAgeSeconds, 'number');
                 assert.strictEqual(typeof cors[0].id, 'string');
+            });
+            it('this should have the right tag config types', () => {
+                const tags = dummyBucket.getTags();
+                assert(Array.isArray(tags));
+                assert.strictEqual(typeof tags[0].key, 'string');
+                assert.strictEqual(typeof tags[0].value, 'string');
             });
         });
 
