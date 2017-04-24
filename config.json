@@ -40,5 +40,8 @@
     "metadataDaemon": {
         "host": "localhost",
         "port": 9990
+    },
+    "recordLog": {
+        "enabled": true
     }
 }
