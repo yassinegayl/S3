@@ -12,7 +12,8 @@ if (config.backends.metadata === 'file') {
           path: config.metadataDaemon.metadataPath,
           restEnabled: config.metadataDaemon.restEnabled,
           restPort: config.metadataDaemon.restPort,
-          log: config.log,
-          versioning: { replicationGroupId: config.replicationGroupId } });
+          versioning: { replicationGroupId: config.replicationGroupId },
+          recordLog: config.recordLog,
+          log: config.log });
     mdServer.startServer();
 }
