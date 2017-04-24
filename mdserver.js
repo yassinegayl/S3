@@ -10,6 +10,8 @@ if (config.backends.metadata === 'file') {
     const mdServer = new MetadataServer(
         { metadataPath: config.filePaths.metadataPath,
           metadataPort: config.metadataDaemon.port,
+          restEnabled: config.metadataDaemon.restEnabled,
+          restPort: config.metadataDaemon.restPort,
           recordLogEnabled: true, //FIXME
           recordLogPath, log: config.log });
     mdServer.startServer();
