@@ -33,13 +33,14 @@ function _parseError(responseBody) {
  * @param {string} [params.path] - request path
  * @param {object} [params.authCredentials] - authentication credentials
  * @param {object} params.authCredentials.accessKey - access key
- * @param {object} params.authCredentials.secretKey - access key
+ * @param {object} params.authCredentials.secretKey - secret key
+ * @param {string} [params.requestBody] request body contents
  * @param {function} callback - with error and response parameters
  * @return {undefined} - and call callback
  */
 function makeRequest(params, callback) {
-    const { hostname, port, method, queryObj, headers, path, authCredentials }
-        = params;
+    const { hostname, port, method, queryObj, headers, path,
+            authCredentials, requestBody } = params;
     const options = {
         hostname,
         port,
@@ -91,6 +92,9 @@ function makeRequest(params, callback) {
                 authCredentials.secretKey, 's3');
         }
     }
+    if (requestBody) {
+        req.write(requestBody);
+    }
     req.end();
 }
 
@@ -103,7 +107,7 @@ function makeRequest(params, callback) {
  * @param {string} [params.objectKey] - object key name
  * @param {object} [params.authCredentials] - authentication credentials
  * @param {object} params.authCredentials.accessKey - access key
- * @param {object} params.authCredentials.secretKey - access key
+ * @param {object} params.authCredentials.secretKey - secret key
  * @param {function} callback - with error and response parameters
  * @return {undefined} - and call callback
  */
