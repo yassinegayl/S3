@@ -46,11 +46,12 @@ describe('PUT bucket taggings', () => {
                 const taggingConfig = generateTaggingConfig(taggingTest.tag.key,
                   taggingTest.tag.value);
                 s3.putBucketTagging({ Bucket: bucketName,
-                  Tagging: taggingConfig }, err => {
+                  Tagging: taggingConfig }, (err, data) => {
                     if (taggingTest.error) {
                         _checkError(err, taggingTest.error, 400);
                     } else {
                         assert.ifError(err, `Found unexpected err ${err}`);
+                        assert.strictEqual(Object.keys(data).length, 0);
                     }
                     done();
                 });
@@ -80,6 +81,16 @@ describe('PUT bucket taggings', () => {
               ] },
           }, err => {
                 _checkError(err, 'InvalidTag', 400);
+                done();
+            });
+        });
+
+        it('should be able to put an empty Tag set', done => {
+            s3.putBucketTagging({ Bucket: bucketName,
+              Tagging: { TagSet: [] },
+          }, (err, data) => {
+                assert.ifError(err, `Found unexpected err ${err}`);
+                assert.strictEqual(Object.keys(data).length, 0);
                 done();
             });
         });

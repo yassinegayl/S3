@@ -83,8 +83,8 @@ describe('putBucketTagging API', () => {
 });
 
 describe('PUT bucket tagging :: helper validation functions ', () => {
-    describe('validateTag ', () => {
-        it('should return expected true if tag is valid error if not',
+    describe('validateTagStructure ', () => {
+        it('should return expected true if tag is valid false/undefined if not',
         done => {
             const tags = [
                 { tagTest: { Key: ['foo'], Value: ['bar'] }, isValid: true },
@@ -105,12 +105,48 @@ describe('PUT bucket tagging :: helper validation functions ', () => {
                 const tag = tags[i];
                 const result = _validator.validateTagStructure(tag.tagTest);
                 if (tag.isValid) {
-                    assert.strictEqual(result, true);
+                    assert(result);
                 } else {
-                    assert(result instanceof Error);
+                    assert(!result);
                 }
             }
             done();
+        });
+
+        describe('validateXMLStructure ', () => {
+            it('should return expected true if tag is valid false/undefined ' +
+            'if not', done => {
+                const tags = [
+                    { tagging: { Tagging: { TagSet: [{ Tag: [] }] } }, isValid:
+                    true },
+                    { tagging: { Tagging: { TagSet: [''] } }, isValid: true },
+                    { tagging: { Tagging: { TagSet: [] } }, isValid: false },
+                    { tagging: { Tagging: { TagSet: [{}] } }, isValid: false },
+                    { tagging: { Tagging: { Tagset: [{ Tag: [] }] } }, isValid:
+                    false },
+                    { tagging: { Tagging: { Tagset: [{ Tag: [] }] },
+                    ExtraTagging: 'extratagging' }, isValid: false },
+                    { tagging: { Tagging: { Tagset: [{ Tag: [] }], ExtraTagset:
+                    'extratagset' } }, isValid: false },
+                    { tagging: { Tagging: { Tagset: [{ Tag: [] }], ExtraTagset:
+                    'extratagset' } }, isValid: false },
+                    { tagging: { Tagging: { Tagset: [{ Tag: [], ExtraTag:
+                    'extratag' }] } }, isValid: false },
+                    { tagging: { Tagging: { Tagset: [{ Tag: {} }] } }, isValid:
+                    false },
+                ];
+
+                for (let i = 0; i < tags.length; i++) {
+                    const tag = tags[i];
+                    const result = _validator.validateXMLStructure(tag.tagging);
+                    if (tag.isValid) {
+                        assert(result);
+                    } else {
+                        assert(!result);
+                    }
+                }
+                done();
+            });
         });
     });
 
