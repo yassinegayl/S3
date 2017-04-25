@@ -32,7 +32,7 @@
     "npm-run-all": "~4.0.2",
     "ready-set-stream": "1.0.7",
     "sproxydclient": "scality/sproxydclient",
-    "utapi": "scality/utapi",
+    "utapi": "scality/utapi#ft/putbuckettagging",
     "utf8": "~2.1.1",
     "vaultclient": "scality/vaultclient",
     "werelogs": "scality/werelogs",
