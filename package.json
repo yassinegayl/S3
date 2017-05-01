@@ -20,7 +20,7 @@
   "homepage": "https://github.com/scality/S3#readme",
   "dependencies": {
     "arsenal": "scality/Arsenal",
-    "async": "~1.4.2",
+    "async": "2.3.0",
     "babel-core": "^6.5.2",
     "babel-plugin-transform-es2015-destructuring": "^6.5.2",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.5.2",
