@@ -69,7 +69,7 @@
     "start": "npm-run-all --parallel start_dmd start_s3server",
     "start_mdserver": "node mdserver.js",
     "start_dataserver": "node dataserver.js",
-    "start_s3server": "node index.js",
+    "start_s3server": "node --inspect --expose-gc --trace-gc index.js",
     "start_dmd": "npm-run-all --parallel start_mdserver start_dataserver",
     "start_utapi": "node lib/utapi/utapi.js",
     "utapi_replay": "node lib/utapi/utapiReplay.js",

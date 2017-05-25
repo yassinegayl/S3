@@ -30,7 +30,7 @@
         "host": "localhost",
         "port": 8500
     },
-    "clusters": 10,
+    "clusters": 1,
     "log": {
         "logLevel": "info",
         "dumpLevel": "error"
