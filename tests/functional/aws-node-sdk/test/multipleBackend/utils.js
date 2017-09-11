@@ -8,7 +8,8 @@ const azureLocation = 'azuretest';
 
 const utils = {};
 
-utils.uniqName = name => `${name}${new Date().getTime()}`;
+utils.uniqName = name => `${name}` +
+`${(Math.floor(Math.random() * 9999)).toString()}${new Date().getTime()}`;
 
 utils.getAzureClient = () => {
     let isTestingAzure;
