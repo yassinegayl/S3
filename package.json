@@ -33,7 +33,7 @@
     "multilevel": "^7.3.0",
     "node-uuid": "^1.4.3",
     "sproxydclient": "scality/sproxydclient#rel/6.4",
-    "utapi": "scality/utapi#rel/6.4",
+    "utapi": "scality/utapi#fix/S3C-887/display-zero-instead-of-negative-metric-value",
     "utf8": "~2.1.1",
     "vaultclient": "scality/vaultclient#rel/6.4",
     "werelogs": "scality/werelogs#rel/6.4",
