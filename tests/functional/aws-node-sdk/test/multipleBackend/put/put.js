@@ -10,7 +10,7 @@ const { createEncryptedBucketPromise } =
     require('../../../lib/utility/createEncryptedBucket');
 const { versioningEnabled } = require('../../../lib/utility/versioning-util');
 
-const { awsLocation, memLocation, fileLocation } = require('../utils');
+const awsLocation = 'awsbackend';
 const awsLocationEncryption = 'aws-test-encryption';
 const bucket = 'buckettestmultiplebackendput';
 const body = Buffer.from('I am a body', 'utf8');
@@ -24,8 +24,10 @@ const bigAWSMD5 = 'a7d414b9133d6483d9a1c4e04e856e3b-2';
 let bucketUtil;
 let s3;
 let awsS3;
-const describeSkipIfNotMultiple = (config.backends.data !== 'multiple'
-    || process.env.S3_END_TO_END) ? describe.skip : describe;
+// const describeSkipIfNotMultiple = (config.backends.data === 'multiple'
+//    || process.env.S3_END_TO_END) ? describe.skip : describe;
+
+const describeSkipIfNotMultiple = describe;
 
 const awsTimeout = 30000;
 const retryTimeout = 10000;
@@ -66,7 +68,7 @@ function awsGetCheck(objectKey, s3MD5, awsMD5, location, cb) {
     });
 }
 
-describe('MultipleBackend put object', function testSuite() {
+describe.only('MultipleBackend put object', function testSuite() {
     this.timeout(250000);
     withV4(sigCfg => {
         beforeEach(() => {
@@ -96,10 +98,12 @@ describe('MultipleBackend put object', function testSuite() {
             });
         });
 
-        it('should return an error to put request without a valid bucket name',
+        it.only('should return an error to put request without a valid ' +
+            'bucket name',
             done => {
                 const key = `somekey-${Date.now()}`;
-                s3.putObject({ Bucket: '', Key: key }, err => {
+                s3.putObject({ Bucket: '', Key: key }, (err, res) => {
+                    console.log(res);
                     assert.notEqual(err, null,
                         'Expected failure but got success');
                     assert.strictEqual(err.code, 'MethodNotAllowed');
