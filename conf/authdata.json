@@ -19,5 +19,15 @@
             "access": "accessKey2",
             "secret": "verySecretKey2"
         }]
+    }, {
+        "name": "Clueso",
+        "email": "sampleaccount3@sampling.com",
+        "arn": "arn:aws:iam::123456789014:root",
+        "canonicalID": "79a59df900b949e55d96a1e698fbacedfd6e09d98eacf8f8d5218e7cd47ef2bg/clueso",
+        "shortid": "123456789014",
+        "keys": [{
+            "access": "accessKey3",
+            "secret": "verySecretKey3"
+        }]
     }]
 }
