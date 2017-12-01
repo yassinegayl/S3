@@ -10,11 +10,7 @@ aws_secret_access_key = $AWS_S3_BACKEND_SECRET_KEY
 aws_access_key_id = $AWS_S3_BACKEND_ACCESS_KEY_2
 aws_secret_access_key = $AWS_S3_BACKEND_SECRET_KEY_2
 EOF
-if [ -z "$AZURE_BACKEND_ACCESS_KEY_2" ]; then
-    echo "Need to check env"
-    exit 1
-fi 
-
+source ~/.bashrc
 MYPWD=$(pwd)
 
 killandsleep () {
