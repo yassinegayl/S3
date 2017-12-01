@@ -20,6 +20,7 @@ if (config.backends.data === 'file' ||
                          { error: err });
             return;
         }
+        console.log('Data Server starting');
         dataServer.start();
     });
 }
