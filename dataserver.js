@@ -9,6 +9,7 @@ console.log(config.backends.metadata);
 if (config.backends.data === 'file' ||
     (config.backends.data === 'multiple' &&
      config.backends.metadata !== 'scality')) {
+    console.log('!!Data Server Setup');
     const dataServer = new arsenal.network.rest.RESTServer(
         { bindAddress: config.dataDaemon.bindAddress,
             port: config.dataDaemon.port,
@@ -16,7 +17,6 @@ if (config.backends.data === 'file' ||
                 { dataPath: config.dataDaemon.dataPath,
                     log: config.log }),
             log: config.log });
-        console.log('Data Server Setup');
     dataServer.setup(err => {
         if (err) {
             logger.error('Error initializing REST data server',
