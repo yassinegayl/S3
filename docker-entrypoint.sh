@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # set -e stops the execution of a script if a command or pipeline has an error
-set -e
+set -exo pipefail
 
 # modifying config.json
 JQ_FILTERS_CONFIG="."
@@ -81,6 +81,15 @@ if [[ "$METADATA_HOST" ]]; then
     JQ_FILTERS_CONFIG="$JQ_FILTERS_CONFIG | .metadataClient.host=\"$METADATA_HOST\""
 fi
 
+if [[ "$MONGODB_HOST" ]]; then
+    JQ_FILTERS_CONFIG="$JQ_FILTERS_CONFIG | .mongodb.host=\"$MONGODB_HOST\""
+    JQ_FILTERS_CONFIG="$JQ_FILTERS_CONFIG | .mongodb.port=27017"
+fi
+
+if [[ "$MONGODB_PORT" ]]; then
+    JQ_FILTERS_CONFIG="$JQ_FILTERS_CONFIG | .mongodb.port=$MONGODB_PORT"
+fi
+
 if [[ "$REDIS_HOST" ]]; then
     JQ_FILTERS_CONFIG="$JQ_FILTERS_CONFIG | .localCache.host=\"$REDIS_HOST\""
     JQ_FILTERS_CONFIG="$JQ_FILTERS_CONFIG | .localCache.port=6379"
@@ -103,5 +112,7 @@ fi
 if [ -r /run/secrets/s3-credentials ] ; then
     . /run/secrets/s3-credentials
 fi
+
+cat config.json
 
 exec "$@"
