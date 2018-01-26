@@ -102,7 +102,7 @@ stages:
           name: run multi-backends unit tests
           command: mocha -t 20000 --recursive tests/multipleBackend
           env:
-            CI: true
+            CI: 'true'
             S3BACKEND: mem
             S3DATA: multiple
 
