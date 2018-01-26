@@ -11,7 +11,9 @@ unset AZURE_BACKEND_ENDPOINT_2
 unset AZURE_STORAGE_ACCOUNT
 unset AZURE_STORAGE_ACCESS_KEY
 
-npm-run-all --parallel start_mdserver start_dataserver > npm-out 2> npm-err &
+
+node mdserver.js > mdserver.out 2>&1 &
+node dataserver.js > dataserver.out 2>&1 &
 while true
 do nc -w 1 localhost 9991
     ret=$?

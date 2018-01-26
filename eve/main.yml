@@ -110,8 +110,8 @@ stages:
           command: ./toto.sh
           logfiles:
             npm-debug: npm-debug.log
-            server-out: npm-out
-            server-err: npm-err
+            mdserver: mdserver.out
+            dataserver: datasever.out
 
 
   # TODO: deduplicate using a setvar for node number
