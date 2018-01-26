@@ -100,11 +100,11 @@ stages:
       - ShellCommandWithSecrets: *aws_credentials
       - ShellCommandWithSecrets:
           name: run multi-backends unit tests
-          command: npm run multiple_backend_test
-          logfiles:
-            npm-debug: npm-debug.log
-            mdserver: mdserver.out
-            dataserver: datasever.out
+          command: mocha -t 20000 --recursive tests/multipleBackend
+          env:
+            CI: true
+            S3BACKEND: mem
+            S3DATA: multiple
 
 
   # TODO: deduplicate using a setvar for node number
