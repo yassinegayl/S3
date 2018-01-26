@@ -100,7 +100,7 @@ stages:
       - ShellCommandWithSecrets: *aws_credentials
       - ShellCommandWithSecrets:
           name: run multi-backends unit tests
-          command: ./toto.sh
+          command: npm run multiple_backend_test
           logfiles:
             npm-debug: npm-debug.log
             mdserver: mdserver.out
