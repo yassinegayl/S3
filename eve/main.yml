@@ -98,15 +98,8 @@ stages:
       - Git: *clone
       - ShellCommand: *node_modules
       - ShellCommandWithSecrets: *aws_credentials
-      - ShellCommand:
-          command: tty
-          usePTY: True
-      - ShellCommand:
-          command: env
-          usePTY: True
       - ShellCommandWithSecrets:
           name: run multi-backends unit tests
-          usePTY: True
           command: ./toto.sh
           logfiles:
             npm-debug: npm-debug.log
